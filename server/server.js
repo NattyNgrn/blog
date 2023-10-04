@@ -55,11 +55,11 @@ app.get("/post/:id", async (req, res) => {
 
 app.post("/addpost", async (req, res) => {
     try{
-        const {user, title, recorded, url} = req.body;
+        const {user, title, recorded, url, article} = req.body;
         console.log(req.body);
         const result = await DB.query(`
-        INSERT INTO posts (user, title, recorded, url)
-        VALUES ('${user}', '${title}', '${recorded}', '${url}')
+        INSERT INTO posts (user, title, recorded, url, article)
+        VALUES ('${user}', '${title}', '${recorded}', '${url}', '${article}')
         `)
         res.send("success");
     } 

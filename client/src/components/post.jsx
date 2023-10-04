@@ -1,6 +1,6 @@
-import { contactbyid } from "../serverfuncs";
+import { postbyid } from "../serverfuncs";
 
-function Contact({id, name, url, setPageToShow, setId}){
+function Post({id, user, title, recorded, url, article, setPageToShow, setId}){
     function showInd(){
         setId(id)
         setPageToShow("individual")
@@ -20,11 +20,11 @@ function Contact({id, name, url, setPageToShow, setId}){
             <div class="p-6">
                 <h5
                     class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                    {name}
+                    {title}
                 </h5>
             </div>
         </div>
     )
 }
 
-export default Contact;
+export default Post;
