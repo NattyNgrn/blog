@@ -67,4 +67,6 @@ function UserLogin(){
       </div>
     </div>
     )
-}
+};
+
+export default UserLogin;
