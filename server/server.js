@@ -2,7 +2,7 @@ import express  from "express";
 import cors from "cors";
 import DB from "./db.js";
 import bodyParser from "body-parser";
-import {v2 as cloudinary} from 'cloudinary';
+
 
 
 const app = express();
@@ -19,11 +19,11 @@ app.get("/", (req, res) => {
     res.json("WELCOME");
 });
 
-app.get("/allcontacts", async (req, res) => {
+app.get("/allposts", async (req, res) => {
     try{
         const result = await DB.query(`
         SELECT *
-        FROM contacts
+        FROM posts
         `)
         const rows = result.rows;
         console.log("success");
@@ -35,12 +35,12 @@ app.get("/allcontacts", async (req, res) => {
     }
 });
 
-app.get("/individual/:id", async (req, res) => {
+app.get("/post/:id", async (req, res) => {
     try{
         const id = req.params.id;
         const result = await DB.query(`
         SELECT *
-        FROM contacts
+        FROM posts
         WHERE id = ${id}
         `)
         const rows = result.rows;
@@ -53,13 +53,13 @@ app.get("/individual/:id", async (req, res) => {
     }
 });
 
-app.post("/add", async (req, res) => {
+app.post("/addpost", async (req, res) => {
     try{
-        const {name, email, phone, notes, url} = req.body;
+        const {user, title, recorded, url} = req.body;
         console.log(req.body);
         const result = await DB.query(`
-        INSERT INTO contacts (name, email, phone, notes, url)
-        VALUES ('${name}', '${email}', '${phone}', '${notes}', '${url}')
+        INSERT INTO posts (user, title, recorded, url)
+        VALUES ('${user}', '${title}', '${recorded}', '${url}')
         `)
         res.send("success");
     } 
@@ -69,29 +69,44 @@ app.post("/add", async (req, res) => {
     }
 });
 
-app.put("/edit/:id", async (req, res) => {
+app.post("/newuser", async (req, res) => {
     try{
-        const id = req.params.id;
-        const {name, email, phone, notes, url} = req.body;
+        const {username, password, firstname, lastname, email, url, bio} = req.body;
         console.log(req.body);
         const result = await DB.query(`
-        UPDATE contacts
-        SET name='${name}', email='${email}', phone='${phone}', notes='${notes}', url='${url}'
-        WHERE id = ${id}
+        INSERT INTO users (username, password, firstname, lastname, email, url, bio)
+        VALUES ('${username}', '${password}', '${firstname}', '${lastname}', '${email}', '${url}', '${bio}')
         `)
         res.send("success");
-    }
+    } 
     catch(error){
         console.log(error);
         return res.status(400).json({error});
-}
+    }
 });
+// app.put("/edit/:id", async (req, res) => {
+//     try{
+//         const id = req.params.id;
+//         const {name, email, phone, notes, url} = req.body;
+//         console.log(req.body);
+//         const result = await DB.query(`
+//         UPDATE contacts
+//         SET name='${name}', email='${email}', phone='${phone}', notes='${notes}', url='${url}'
+//         WHERE id = ${id}
+//         `)
+//         res.send("success");
+//     }
+//     catch(error){
+//         console.log(error);
+//         return res.status(400).json({error});
+// }
+// });
 
 app.delete("/delete/:id", async (req, res) => {
     try{
         const id = req.params.id;
         const result = await DB.query(`
-        DELETE FROM contacts WHERE id=${id}
+        DELETE FROM posts WHERE id=${id}
         `)
         res.send("success");
     } 
