@@ -1,13 +1,18 @@
-import { useState } from 'react'
-
+import {Routes, Route } from 'react-router-dom';
 import './App.css'
-import UserLogin from './components/userLogin'
+import LoginPage from './pages/loginPage';
+import ProfilePage from './pages/profilePage';
+import HomePage from './pages/homePage';
 
 function App() {
 
   return (
     <div>
-      <UserLogin> </UserLogin>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/products" element={<ProfilePage />} />
+        <Route path="/about" element={<LoginPage />} />
+      </Routes>
     </div>
   )
 };
