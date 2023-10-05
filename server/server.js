@@ -53,6 +53,43 @@ app.get("/post/:id", async (req, res) => {
     }
 });
 
+app.get("/user/:id", async (req, res) => {
+    try{
+        const id = req.params.id;
+        const result = await DB.query(`
+        SELECT *
+        FROM users
+        WHERE id = ${id}
+        `)
+        const rows = result.rows;
+        console.log(rows);
+        res.send(rows[0]);
+    } 
+    catch(error){
+        console.log(error);
+        return res.status(400).json({error});
+    }
+});
+
+app.put("/edituser/:id", async (req, res) => {
+    try{
+        const id = req.params.id;
+        const {username, password, firstname, lastname, email, url, bio} = req.body;
+        console.log(req.body);
+        const result = await DB.query(`
+        UPDATE contacts
+        SET username='${username}', password='${password}', firstname='${firstname}', lastname='${lastname}', 
+        email='${email}', url='${url}', bio='${bio}'
+        WHERE id = ${id}
+        `)
+        res.send("success");
+    }
+    catch(error){
+        console.log(error);
+        return res.status(400).json({error});
+}
+});
+
 app.post("/addpost", async (req, res) => {
     try{
         const {user, title, recorded, url, article} = req.body;

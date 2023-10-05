@@ -18,6 +18,14 @@ async function postbyid(id){
     return individual;
 }
 
+//get individual user when title/picture is clicked
+async function userbyid(id){
+    const result = await fetch(API + `/user/${id}`);
+    const individual = await result.json();
+    console.log(individual);
+    return individual;
+}
+
 
 //add new post
 async function addpost(user, title, recorded, url, article){
@@ -68,5 +76,24 @@ async function deletepost(id){
     console.log(result);
 }
 
+//edit user
+async function edituser(username, password, firstname, lastname, email, url, bio){
+    const result = await fetch(API + `/edituser/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+            username: username, 
+            password: password, 
+            firstname: firstname, 
+            lastname: lastname, 
+            email: email, 
+            url: url, 
+            bio: bio
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    console.log(result);
+}
 
-export {allposts, postbyid, addpost, deletepost, newuser};
+export {allposts, postbyid, addpost, deletepost, newuser, edituser, userbyid};
