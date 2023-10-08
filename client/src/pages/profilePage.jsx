@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { userbyid } from "../serverfuncs.js";
 import { edituser } from "../serverfuncs.js"
+import { Link } from 'react-router-dom';
 
 //username, password, firstname, lastname, email, url, bio
 function ProfilePage({id}){
@@ -71,7 +72,7 @@ function ProfilePage({id}){
             <h1 className="m-8 text-xl font-medium text-amber-400">Bio: {user.bio}</h1>
             
             <button onClick={()=>setShowEdit(true)} class=" m-4 bg-amber-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-md"> Edit</button>
-            <button  class=" m-4 bg-amber-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-md"> Home </button>
+            <button  class=" m-4 bg-amber-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-md"> <Link to="/home">Home</Link> </button>
         </div>
         )
     }
